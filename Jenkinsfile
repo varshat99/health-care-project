@@ -1,7 +1,7 @@
 pipeline{
     agent any
     tools {
-        git 'git'
+        git 'default'
     }    
     stages{
         stage('checkout the code from github'){
