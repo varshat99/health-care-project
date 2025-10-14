@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    tools {
+        git 'git'
+    }    
     stages{
         stage('checkout the code from github'){
             steps{
