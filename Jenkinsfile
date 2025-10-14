@@ -2,6 +2,7 @@ pipeline{
     agent any
     tools {
         git 'git'
+        maven 'maven'
     }    
     stages{
         stage('checkout the code from github'){
