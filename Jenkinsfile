@@ -45,7 +45,6 @@ pipeline{
                 sh 'docker run -dt -p 8082:8082 --name c001 myimg1'
             }
         } 
-        stages {
         stage('Deploy to Kubernetes') {
             steps {
                 // Write kubeconfig content to a file Jenkins can use
@@ -58,4 +57,4 @@ pipeline{
             }
     }
 }
-}
+
