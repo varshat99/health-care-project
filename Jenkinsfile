@@ -1,7 +1,7 @@
 pipeline{
     agent any
     environment {
-        KUBECONFIG_CONTENT = credentials('kubeconfig-secret')
+        KUBECONFIG_CONTENT = credentials('kube-secret')
     }
     tools {
         git 'git'
