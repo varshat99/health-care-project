@@ -39,7 +39,7 @@ pipeline{
          }
         stage('port expose'){
             steps{
-                sh 'docker run -dt -p 8089:8088 --name c009 myimg1'
+                sh 'docker run -dt -p 8090:8088 --name c010 myimg1'
             }
         } 
         stage('Deploy to Kubernetes') {
