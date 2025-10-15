@@ -42,7 +42,7 @@ pipeline{
          }
         stage('port expose'){
             steps{
-                sh 'docker run -dt -p 8084:8082 --name c004 myimg1'
+                sh 'docker run -dt -p 8085:8082 --name c005 myimg1'
             }
         } 
         stage('Deploy to Kubernetes') {
@@ -50,8 +50,9 @@ pipeline{
                 // Write kubeconfig content to a file Jenkins can use
                 sh '''
                     echo "$KUBECONFIG_CONTENT" > kubeconfig.yaml
-                    export KUBECONFIG=kubeconfig.yaml
+                    export KUBECONFIG=$(pwd)/kubeconfig.yaml
                     kubectl apply -f k8.yml
+                    kubectl get pods
                 '''
                 }
             }
