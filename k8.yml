@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: healthcare
-        image: varshat99/myimg1:latest
+        image: c010
         ports:
         - containerPort: 8088
 ---
