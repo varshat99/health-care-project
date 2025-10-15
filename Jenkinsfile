@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    environment {
+        KUBECONFIG_CONTENT = credentials('kubeconfig-secret')
+    }
     tools {
         git 'git'
         maven 'maven'
@@ -42,18 +45,15 @@ pipeline{
                 sh 'docker run -dt -p 8082:8082 --name c001 myimg1'
             }
         } 
+        stages {
         stage('Deploy to Kubernetes') {
             steps {
-                script {
-                    echo 'Deploying DockerHub image to Kubernetes...'
-                }
-                withKubeConfig([credentialsId: 'kubeconfig-cred']) {
-                    sh '''
-                        echo "Applying Kubernetes deployment and service..."
-                        kubectl apply -f k8s/deployment.yaml
-                        kubectl apply -f k8s/service.yaml
-                        kubectl rollout status deployment/healthcare-deployment
-                    '''
+                // Write kubeconfig content to a file Jenkins can use
+                sh '''
+                    echo "$KUBECONFIG_CONTENT" > kubeconfig.yaml
+                    export KUBECONFIG=kubeconfig.yaml
+                    kubectl apply -f k8.yml
+                '''
                 }
             }
     }
