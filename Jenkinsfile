@@ -39,7 +39,7 @@ pipeline{
          }
         stage('port expose'){
             steps{
-                sh 'docker run -dt -p 8091:8088 --name c011 myimg1'
+                sh 'docker run -dt -p 8092:8088 --name c012 myimg1'
             }
         } 
         stage('Deploy to Kubernetes') {
@@ -49,7 +49,6 @@ pipeline{
                 sh '''
                     echo "using kubeconfig file from jenkins credentials"
                     export KUBECONFIG=$KUBECONFIG_FILE
-                    kubectl config view
                     kubectl get nodes
                     kubectl apply -f k8.yml
                     kubectl get pods
