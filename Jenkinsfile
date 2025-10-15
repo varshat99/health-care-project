@@ -41,6 +41,20 @@ pipeline{
             steps{
                 sh 'docker run -dt -p 8082:8082 --name c001 myimg1'
             }
-        }   
+        } 
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    echo 'Deploying DockerHub image to Kubernetes...'
+                }
+                withKubeConfig([credentialsId: 'kubeconfig-cred']) {
+                    sh '''
+                        echo "Applying Kubernetes deployment and service..."
+                        kubectl apply -f k8s/deployment.yaml
+                        kubectl apply -f k8s/service.yaml
+                        kubectl rollout status deployment/healthcare-deployment
+                    '''
+                }
+            }
     }
 }
